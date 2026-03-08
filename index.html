@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPIELEWOY | Maximilian</title>
+  <meta name="description" content="Maximilian Spielewoy – AI Automation & Scraping Developer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <canvas id="matrix-bg"></canvas>
+  <div class="scanlines"></div>
+
+  <div class="hacker-deco hacker-deco--1">
+    SYS_INIT: 0xFF3A<br />KERNEL_02 LOADED<br />...<br />ROOT ACCESS
+  </div>
+  <div class="hacker-deco hacker-deco--2">
+    MCK_PRCESS_312<br />GLITCHED_INTEGRATION<br />NULL_PTR<br />BYPASS_SEC
+  </div>
+  <div class="hacker-deco hacker-deco--3">
+    01010111 01000001<br />DATA_STREAM_ACTIVE<br />DECRYPTING...<br />PROXY
+    200 OK
+  </div>
+  <div class="hacker-deco hacker-deco--4">
+    FS_INIT_HACK...<br />spawns 200<br />HCK_INTEGRATION<br />GLITCH_MODE
+  </div>
+
+  <main class="page">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero__left">
+          <div class="hero-top">
+            <h1 class="hero__title">SPIELEWOY</h1>
+            <h2 class="hero__sub">MAXIMILIAN</h2>
+          </div>
+
+          <!-- SKILLS -->
+          <section id="skills" class="skills">
+            <h3 class="sec-title">Skills</h3>
+            <div class="skills__grid">
+              <div class="skill"><i class="fa-brands fa-python"></i></div>
+              <div class="skill"><i class="fa-brands fa-js"></i></div>
+              <div class="skill"><i class="fa-brands fa-react"></i></div>
+              <div class="skill"><span>C++</span></div>
+              <div class="skill"><span>SQL</span></div>
+              <div class="skill"><i class="fa-brands fa-docker"></i></div>
+              <div class="skill"><i class="fa-brands fa-linux"></i></div>
+              <div class="skill"><i class="fa-brands fa-node-js"></i></div>
+              <div class="skill"><span>TF</span></div>
+              <div class="skill"><i class="fa-brands fa-git-alt"></i></div>
+              <div class="skill"><span>C#</span></div>
+              <div class="skill"><i class="fa-brands fa-aws"></i></div>
+            </div>
+          </section>
+
+          <!-- GITHUB (custom nycx-style contribution graph) -->
+          <section id="github" class="github">
+            <h3 class="sec-title">Github</h3>
+            <div class="gh-graph-wrap">
+              <div class="gh-graph" id="gh-graph">
+                <p style="color: #555; font-size: 0.85rem">
+                  Loading contributions…
+                </p>
+              </div>
+              <div class="gh-legend">
+                <span>Less</span>
+                <span class="gh-swatch" style="background: #1a1a1a"></span>
+                <span class="gh-swatch" style="background: #ffedd5"></span>
+                <span class="gh-swatch" style="background: #fed7aa"></span>
+                <span class="gh-swatch" style="background: #fb923c"></span>
+                <span class="gh-swatch" style="background: #ea580c"></span>
+                <span>More</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT: Statue spanning full height -->
+        <div class="hero__right">
+          <div class="img-wrap">
+            <img src="nobackground/unnamed (1).png" alt="" class="statue-img" />
+            <div class="hero-statue-fade"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BELOW THE FOLD ============ -->
+    <div id="below-fold" class="divider" style="margin-top: 60px"></div>
+
+    <!-- WORK + LANGUAGES -->
+    <section class="info">
+      <div class="info__work">
+        <h3 class="sec-title">Work history</h3>
+        <p class="info__role">Freelance – Enterprise Web Scraping</p>
+        <ul class="info__list">
+          <li>
+            Developed a large-scale data scraper for a corporate client to
+            automate the extraction of blog posts and article data.
+          </li>
+        </ul>
+
+        <p class="info__role" style="margin-top: 16px">
+          Freelance – "AI-focused"
+        </p>
+        <ul class="info__list">
+          <li>Developed custom data scraping APIs</li>
+          <li>Integrated large-scale AI models</li>
+        </ul>
+      </div>
+      <div class="info__langs">
+        <h3 class="sec-title">Languages:</h3>
+        <div class="lang">
+          <div class="lang__row">
+            <span>ENGLISH: C1 Advanced</span><span class="lang__flag">🇬🇧</span>
+          </div>
+          <div class="bar">
+            <div class="bar__fill" style="width: 85%"></div>
+          </div>
+        </div>
+        <div class="lang">
+          <div class="lang__row">
+            <span>GERMAN: C2 Native</span><span class="lang__flag">🇩🇪</span>
+          </div>
+          <div class="bar">
+            <div class="bar__fill" style="width: 100%"></div>
+          </div>
+        </div>
+        <div class="lang">
+          <div class="lang__row">
+            <span>SPANISH: B1 Intermediate</span><span class="lang__flag">🇪🇸</span>
+          </div>
+          <div class="bar">
+            <div class="bar__fill" style="width: 50%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects">
+      <h3 class="sec-title">Projects:</h3>
+      <div class="projects__grid">
+        <div class="card card--filled">
+          <h4 class="card__name">PINGWING</h4>
+          <p class="card__desc">
+            -Reverse engineered an german marketplace app; integrated api for
+            mass use
+          </p>
+        </div>
+        <a href="https://github.com/Progambler67" class="card card--empty" style="
+              color: inherit;
+              text-decoration: none;
+              display: block;
+              text-align: left;
+            ">
+          <span class="ghost ghost--top">FS_INIT_HACK...<br />NULL_PTR glitch<br />...</span>
+          <h4 class="card__name">GITHUB</h4>
+          <p class="card__desc" style="margin-top: 8px">
+            View all projects, scripts, and open-source contributions.
+          </p>
+          <span class="ghost ghost--bot">HCK_PRCESS_312<br />HCK_INTEGRATION</span>
+        </a>
+        <div class="card card--empty" style="display: block; text-align: left">
+          <span class="ghost ghost--top">IULLOCKING glitch..</span>
+          <h4 class="card__name">TROLLANZEIGEN</h4>
+          <p class="card__desc" style="margin-top: 8px">
+            Lightweight watcher for Kleinanzeigen that tracks fresh ads and
+            shows whether a phone number is attached. (for prankcalls)
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- TL;DR -->
+    <section class="tldr">
+      <h3 class="tldr__heading">TL;DR</h3>
+      <div class="tldr__body">
+        <div class="tldr__bust img-wrap">
+          <img src="nobackground/unnamed.png" alt="" class="statue-img" />
+        </div>
+        <div class="tldr__info">
+          <ul class="tldr-stats">
+            <li>- SYS_ID: MAXIMILIAN (SPIELEWOY)</li>
+            <li>- LOC: MUNICH, DE (MUC)</li>
+            <li>- UPTIME: 16 Y/O</li>
+          </ul>
+
+          <h4 class="tldr-subtitle">CORE_DIRECTIVES:</h4>
+          <ul class="tldr-directives">
+            <li>
+              - AI Automation: Orchestrating autonomous LLM workflows to
+              streamline complex logic and data parsing.
+            </li>
+            <li>
+              - Ent. Scraping: Building durable data extraction pipelines with
+              advanced anti-bot bypass mechanisms.
+            </li>
+            <li>
+              - Rev-Engineering: Developing custom tooling and seamless
+              integrations for undocumented, closed-source APIs.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT / FOOTER -->
+    <section class="footer">
+      <div class="footer__contact">
+        <h2 class="sec-title contact-header">CONTACT:</h2>
+        <a href="mailto:m.spielewoy@gmail.com" class="footer__email">m.spielewoy@gmail.com</a>
+        <br>
+        <a href="https://github.com/Progambler67" class="footer__github">- GITHUB: Progambler67</a>
+      </div>
+      <div class="footer__statue-wrap">
+        <div class="img-wrap">
+          <img src="nobackground/unnamed (2).png" alt="" class="statue-img" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SCROLL FADE at bottom of viewport -->
+  <div class="scroll-fade"></div>
+
+  <script src="script.js"></script>
+  <script>
+    /* ===================================================
+     Custom GitHub Contribution Graph (nycx-style)
+     Uses GitHub's public contribution page scraping
+     =================================================== */
+    (function () {
+      const USERNAME = "Progambler67";
+      const COLORS = ["#1a1a1a", "#FFEDD5", "#FED7AA", "#FB923C", "#EA580C"];
+      const DAYS = ["", "Mon", "", "Wed", "", "Fri", ""];
+
+      async function fetchContributions() {
+        try {
+          const resp = await fetch(
+            `https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`,
+          );
+          const data = await resp.json();
+          renderGraph(data.contributions);
+        } catch (e) {
+          console.warn("GitHub graph fetch failed:", e);
+          document.getElementById("gh-graph").innerHTML =
+            '<p style="color:#555;font-size:.8rem;">Could not load GitHub contributions.</p>';
+        }
+      }
+
+      function getLevel(count) {
+        if (count === 0) return 0;
+        if (count <= 2) return 1;
+        if (count <= 5) return 2;
+        if (count <= 9) return 3;
+        return 4;
+      }
+
+      function renderGraph(contributions) {
+        const container = document.getElementById("gh-graph");
+        container.innerHTML = "";
+
+        // Group by week
+        const weeks = [];
+        let currentWeek = [];
+        contributions.forEach((day, i) => {
+          const d = new Date(day.date);
+          const dow = d.getDay(); // 0=Sun
+          if (dow === 0 && currentWeek.length > 0) {
+            weeks.push(currentWeek);
+            currentWeek = [];
+          }
+          currentWeek.push(day);
+        });
+        if (currentWeek.length > 0) weeks.push(currentWeek);
+
+        // Month labels row
+        const monthsRow = document.createElement("div");
+        monthsRow.className = "gh-months";
+        const monthNames = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        let lastMonth = -1;
+        const spacer = document.createElement("div");
+        spacer.className = "gh-day-label";
+        spacer.textContent = "";
+        monthsRow.appendChild(spacer);
+
+        weeks.forEach((week) => {
+          const firstDay = new Date(week[0].date);
+          const month = firstDay.getMonth();
+          const label = document.createElement("div");
+          label.className = "gh-month-label";
+          if (month !== lastMonth) {
+            label.textContent = monthNames[month];
+            lastMonth = month;
+          }
+          monthsRow.appendChild(label);
+        });
+        container.appendChild(monthsRow);
+
+        // Build rows (7 days: Sun=0 to Sat=6)
+        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+          const row = document.createElement("div");
+          row.className = "gh-row";
+
+          // Day label
+          const dayLabel = document.createElement("div");
+          dayLabel.className = "gh-day-label";
+          dayLabel.textContent = DAYS[dayIndex];
+          row.appendChild(dayLabel);
+
+          weeks.forEach((week) => {
+            const dayData = week.find(
+              (d) => new Date(d.date).getDay() === dayIndex,
+            );
+            const cell = document.createElement("div");
+            cell.className = "gh-cell";
+            if (dayData) {
+              const level = getLevel(dayData.count);
+              cell.style.background = COLORS[level];
+              cell.title = `${dayData.date}: ${dayData.count} contributions`;
+            } else {
+              cell.style.background = COLORS[0];
+            }
+            row.appendChild(cell);
+          });
+
+          container.appendChild(row);
+        }
+      }
+
+      fetchContributions();
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,794 @@
+/* ===================================================
+   SPIELEWOY – Cyber Portfolio  v4  (Sketch-accurate)
+   =================================================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #080808;
+  --surface: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --txt: #ccc;
+  --dim: #555;
+  --white: #f0f0f0;
+  --mono: "Share Tech Mono", monospace;
+  --sans: "Inter", sans-serif;
+  /* Side stripe width — identical left and right */
+  --stripe: 8%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: var(--mono);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--white);
+}
+
+/* -------- matrix canvas -------- */
+#matrix-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+}
+
+/* -------- scanlines -------- */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px);
+}
+
+/* -------- hacker text decorations -------- */
+.hacker-deco {
+  position: fixed;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+  z-index: 0;
+  white-space: pre;
+}
+
+.hacker-deco--1 {
+  top: 12%;
+  right: 3%;
+}
+
+.hacker-deco--2 {
+  top: 45%;
+  left: 2%;
+}
+
+.hacker-deco--3 {
+  top: 70%;
+  right: 5%;
+}
+
+.hacker-deco--4 {
+  top: 88%;
+  left: 4%;
+}
+
+/* -------- page -------- */
+.page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  /* Identical left/right "empty stripes" */
+  padding: 32px var(--stripe) 3rem;
+  /* Hard guillotine the layout bottom to ignore transparent image overflow */
+  overflow: hidden;
+}
+
+/* -------- section title -------- */
+.sec-title {
+  font-size: 1.5rem;
+  color: var(--white);
+  margin-bottom: 14px;
+  letter-spacing: 0.06em;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* -------- thin divider (replaces old wave lines) -------- */
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 28px 0;
+  align-self: stretch;
+  width: 100%;
+}
+
+/* ────────────────────────────────────────────
+   IMAGE HANDLING
+   ──────────────────────────────────────────── */
+.img-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.statue-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.15) brightness(1);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Glitch clones */
+.glitch-active {
+  position: relative;
+}
+
+.statue-glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: screen;
+}
+
+.glitch-layer-1 {
+  transform: translateX(-6px);
+  filter: grayscale(1) sepia(1) hue-rotate(180deg) saturate(500%) brightness(1.1) opacity(0.9);
+}
+
+.glitch-layer-2 {
+  transform: translateX(6px);
+  filter: grayscale(1) sepia(1) hue-rotate(10deg) saturate(500%) brightness(1.1) opacity(0.9);
+  display: none;
+}
+
+.hero__right .glitch-layer-1 {
+  -webkit-mask-image: linear-gradient(160deg, black 54%, rgba(0, 0, 0, 0) 57%);
+  mask-image: linear-gradient(160deg, black 54%, rgba(0, 0, 0, 0) 57%);
+  clip-path: none;
+}
+
+.tldr__bust .glitch-layer-1 {
+  -webkit-mask-image: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, black 52%);
+  mask-image: linear-gradient(45deg, rgba(0, 0, 0, 0) 48%, black 52%);
+  clip-path: none;
+}
+
+.footer__statue-wrap .glitch-layer-1 {
+  -webkit-mask-image: linear-gradient(35deg, rgba(0, 0, 0, 0) 45%, black 50%);
+  mask-image: linear-gradient(35deg, rgba(0, 0, 0, 0) 45%, black 50%);
+  clip-path: none;
+}
+
+/* ============================================================
+   HERO — Full-viewport two-column layout
+   Left: Name + Skills + GitHub
+   Right: Full-height statue
+   ============================================================ */
+.hero {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 40px;
+  position: relative;
+}
+
+.hero-top {
+  text-align: center;
+  align-self: center;
+  width: 100%;
+  margin: 0 0 2rem 0;
+  z-index: 2;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  flex: 1;
+  width: 100%;
+  max-width: 95%;
+  margin-left: 0;
+}
+
+.hero__left {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 3rem;
+  gap: 2.5rem;
+}
+
+/* ---- Name — NO glitch, plain large text ---- */
+.hero__title {
+  font-size: clamp(3rem, 5.5vw, 4.8rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.hero__sub {
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  color: var(--dim);
+  margin-bottom: 0;
+}
+
+/* ---- Statue on Right — placed perfectly ---- */
+.hero__right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  height: 95vh;
+  transform: translateX(2vw);
+}
+
+.hero__right .img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  transform: scale(1.05);
+}
+
+.hero__right .statue-img,
+.hero__right .statue-glitch {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right center;
+}
+
+/* Standalone overlay module to fade out the statue feet into the background */
+.hero-statue-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent 0%, var(--bg) 90%, var(--bg) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ============================================================
+   SKILLS — Bigger boxes, full width of left column
+   ============================================================ */
+.skills {
+  margin-top: 0;
+  width: 100%;
+  max-width: 650px;
+  align-self: flex-start;
+  margin-bottom: 0;
+}
+
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  max-width: 100%;
+}
+
+.skill {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  font-size: 3rem;
+  color: var(--txt);
+  cursor: default;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.skill span {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: var(--sans);
+}
+
+.skill:hover {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.07);
+}
+
+/* ============================================================
+   GITHUB CONTRIBUTION GRAPH  (nycx.is-a.dev style)
+   ============================================================ */
+.github {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  width: 100%;
+  max-width: 1050px;
+  align-self: flex-start;
+  transform: scale(1.15);
+  transform-origin: left top;
+}
+
+.gh-graph-wrap {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 32px 28px 2rem 1.5rem;
+  overflow: visible;
+}
+
+.gh-graph {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.gh-months {
+  display: flex;
+  gap: 0;
+  margin-bottom: 8px;
+}
+
+.gh-month-label {
+  flex: 1;
+  font-size: 1.1rem;
+  color: var(--dim);
+  font-family: var(--sans);
+  text-align: left;
+}
+
+.gh-row {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+.gh-day-label {
+  width: 45px;
+  min-width: 45px;
+  font-size: 1.1rem;
+  color: var(--dim);
+  font-family: var(--sans);
+}
+
+.gh-cell {
+  flex: 1;
+  aspect-ratio: 1;
+  margin: 2px;
+  border-radius: 50%;
+  transition: transform 0.15s;
+}
+
+.gh-cell:hover {
+  transform: scale(1.4);
+}
+
+.gh-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+  font-size: 1rem;
+  color: var(--dim);
+  font-family: var(--sans);
+}
+
+.gh-swatch {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+}
+
+/* ============================================================
+   INFO (Work + Languages)
+   ============================================================ */
+.info {
+  display: flex;
+  align-items: flex-start;
+  gap: 5rem;
+  margin-top: 4px;
+}
+
+.info__work {
+  flex: 1;
+}
+
+.info__langs {
+  flex: 1;
+}
+
+.info__role {
+  color: var(--dim);
+  font-family: var(--sans);
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+}
+
+.info__list {
+  list-style: none;
+}
+
+.info__list li {
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 5px;
+  font-size: 0.88rem;
+}
+
+.info__list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+.lang {
+  margin-bottom: 12px;
+}
+
+.lang__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+.lang__flag {
+  filter: grayscale(0.7);
+  font-size: 0.9rem;
+}
+
+.bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(1.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bar__fill {
+  height: 100%;
+  background: var(--dim);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.projects {
+  margin-top: 4rem;
+}
+
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.card__name {
+  font-size: 1rem;
+  color: var(--white);
+  letter-spacing: 0.06em;
+  display: inline-block;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.6);
+  margin-bottom: 6px;
+}
+
+.card__desc {
+  font-size: 0.78rem;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+.card--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: dashed;
+}
+
+.ghost {
+  position: absolute;
+  font-size: 0.58rem;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.07);
+  pointer-events: none;
+  font-family: var(--mono);
+}
+
+.ghost--top {
+  top: 8px;
+  left: 10px;
+}
+
+.ghost--bot {
+  bottom: 8px;
+  right: 10px;
+  text-align: right;
+}
+
+/* ============================================================
+   TL;DR
+   ============================================================ */
+.tldr {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.tldr__heading {
+  font-size: 2rem;
+  color: var(--white);
+  letter-spacing: 0.15em;
+  margin-bottom: 14px;
+}
+
+.tldr__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.tldr__bust {
+  width: 260px;
+  position: relative;
+}
+
+.tldr__bust .statue-img {
+  filter: grayscale(1) contrast(1.2) brightness(1.1) drop-shadow(0 0 15px rgba(255, 255, 255, 0.05));
+}
+
+.tldr__info {
+  text-align: left;
+  font-size: 0.92rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tldr-stats {
+  list-style: none;
+}
+
+.tldr-stats li {
+  margin-bottom: 3px;
+}
+
+.tldr-subtitle {
+  margin-top: 1.5rem;
+  color: var(--white);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.tldr-directives {
+  list-style: none;
+}
+
+.tldr-directives li {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 10% 0;
+  margin-top: -10rem;
+  /* Pull the bottom boundary UP tightly behind the contact text */
+  margin-bottom: -360px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.footer__contact {
+  padding: 0;
+  min-width: 380px;
+  margin-top: 11.5rem;
+  margin-left: 8vw;
+}
+
+.footer__contact .contact-header {
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.footer__email {
+  display: inline-block;
+  font-size: 1.3rem;
+  color: var(--txt);
+  margin-bottom: 12px;
+}
+
+.footer__email:hover {
+  color: var(--white);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.footer__github {
+  display: inline-block;
+  font-size: 1.3rem;
+  color: var(--dim);
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    text-shadow 0.2s;
+  margin-top: 5px;
+}
+
+.footer__github:hover {
+  color: var(--white);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.footer__statue-wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.footer__statue-wrap .img-wrap {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   SCROLL FADE — fixed gradient at page bottom
+   ============================================================ */
+.scroll-fade {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(to top,
+      var(--bg) 30%,
+      rgba(8, 8, 8, 0.9) 55%,
+      rgba(8, 8, 8, 0.4) 75%,
+      transparent 100%);
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    text-align: center;
+  }
+
+  .hero__nav {
+    align-items: center;
+  }
+
+  .hero__right {
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .hero__right .img-wrap {
+    max-width: 280px;
+  }
+
+  .skills__grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 100%;
+  }
+
+  .info {
+    grid-template-columns: 1fr;
+  }
+
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tldr__body {
+    flex-direction: column;
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__statue-wrap {
+    justify-content: center;
+  }
+
+  .footer__statue-wrap .img-wrap {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 12px 28px;
+  }
+
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .skills__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
