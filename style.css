@@ -19,12 +19,13 @@
   --white: #f0f0f0;
   --mono: "Share Tech Mono", monospace;
   --sans: "Inter", sans-serif;
-  /* Side stripe width — identical left and right */
-  --stripe: 8%;
+  /* Side stripe width — fluid so it shrinks on mobile */
+  --stripe: clamp(16px, 5vw, 8%);
 }
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -32,6 +33,7 @@ body {
   color: var(--txt);
   font-family: var(--mono);
   overflow-x: hidden;
+  max-width: 100vw;
   line-height: 1.5;
 }
 
@@ -223,6 +225,7 @@ a:hover {
   width: 100%;
   max-width: 95%;
   margin-left: 0;
+  overflow: hidden;
 }
 
 .hero__left {
@@ -262,7 +265,7 @@ a:hover {
   justify-content: flex-end;
   align-items: center;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   height: 95vh;
   transform: translateX(2vw);
 }
@@ -355,8 +358,7 @@ a:hover {
   width: 100%;
   max-width: 1050px;
   align-self: flex-start;
-  transform: scale(1.15);
-  transform-origin: left top;
+  overflow: hidden;
 }
 
 .gh-graph-wrap {
@@ -366,19 +368,22 @@ a:hover {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   padding: 32px 28px 2rem 1.5rem;
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .gh-graph {
   display: flex;
   flex-direction: column;
   gap: 0;
+  min-width: 700px;
 }
 
 .gh-months {
   display: flex;
   gap: 0;
   margin-bottom: 8px;
+  min-width: 700px;
 }
 
 .gh-month-label {
@@ -393,6 +398,7 @@ a:hover {
   display: flex;
   gap: 0;
   align-items: center;
+  min-width: 700px;
 }
 
 .gh-day-label {
@@ -409,6 +415,7 @@ a:hover {
   margin: 2px;
   border-radius: 50%;
   transition: transform 0.15s;
+  min-width: 10px;
 }
 
 .gh-cell:hover {
@@ -658,7 +665,7 @@ a:hover {
 
 .footer__contact {
   padding: 0;
-  min-width: 380px;
+  min-width: 0;
   margin-top: 11.5rem;
   margin-left: 8vw;
 }
@@ -727,47 +734,160 @@ a:hover {
 }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE  –  5-tier breakpoints
    ============================================================ */
-@media (max-width: 768px) {
-  .hero {
+
+/* ---------- ≤ 1200px  (small desktop / large laptop) ---------- */
+@media (max-width: 1200px) {
+  .hero-content {
+    grid-template-columns: 60% 40%;
+  }
+
+  .github {
+    max-width: 100%;
+  }
+
+  .footer {
+    padding: 0 5%;
+  }
+
+  .footer__contact {
+    margin-left: 2vw;
+  }
+}
+
+/* ---------- ≤ 1024px  (tablet landscape / collapse hero) ---------- */
+@media (max-width: 1024px) {
+  /* ---- KILL EVERY OVERFLOW SOURCE ---- */
+
+  .hero-content {
     grid-template-columns: 1fr;
-    min-height: auto;
-    text-align: center;
+    max-width: 100%;
   }
 
-  .hero__nav {
+  .hero__left {
     align-items: center;
+    text-align: center;
+    padding-top: 1rem;
+    max-width: 100%;
+    overflow: hidden;
   }
 
+  .hero-top {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2rem, 7vw, 4rem);
+    letter-spacing: 0.06em;
+    word-break: break-word;
+  }
+
+  .hero__sub {
+    letter-spacing: 0.2em;
+    font-size: 1rem;
+  }
+
+  /* Statue: contained, centered, above content */
   .hero__right {
+    height: 45vh;
     justify-content: center;
-    margin-top: 16px;
+    transform: none !important;
+    order: -1;
+    overflow: hidden;
+    max-width: 100%;
   }
 
   .hero__right .img-wrap {
-    max-width: 280px;
+    transform: none !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .hero__right .statue-img,
+  .hero__right .statue-glitch {
+    object-position: center center;
+  }
+
+  /* Skills: full width, no overflow */
+  .skills {
+    max-width: 100%;
+    align-self: center;
   }
 
   .skills__grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .skill {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+  }
+
+  .skill span {
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+  }
+
+  /* GitHub: constrained, scrollable inside */
+  .github {
     max-width: 100%;
+    align-self: center;
   }
 
+  .gh-graph-wrap {
+    padding: 18px 14px 1rem 0.8rem;
+  }
+
+  .gh-month-label {
+    font-size: 0.8rem;
+  }
+
+  .gh-day-label {
+    width: 30px;
+    min-width: 30px;
+    font-size: 0.8rem;
+  }
+
+  /* Language bars: no scale overflow */
+  .bar {
+    transform: none;
+  }
+
+  /* Info: stack vertically */
   .info {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: 2rem;
   }
 
+  /* Projects: 2-col */
   .projects__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
+  /* TLDR: stack */
   .tldr__body {
     flex-direction: column;
+    gap: 24px;
   }
 
+  .tldr__bust {
+    width: clamp(160px, 40vw, 260px);
+  }
+
+  /* Footer: stack, remove all hardcoded positioning */
   .footer {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 2rem 5%;
+    gap: 2rem;
+  }
+
+  .footer__contact {
+    margin-top: 0;
+    margin-left: 0;
   }
 
   .footer__statue-wrap {
@@ -775,20 +895,268 @@ a:hover {
   }
 
   .footer__statue-wrap .img-wrap {
-    max-width: 280px;
+    max-width: 300px;
+  }
+
+  .scroll-fade {
+    height: 220px;
   }
 }
 
-@media (max-width: 480px) {
-  .page {
-    padding: 16px 12px 28px;
+/* ---------- ≤ 768px  (tablet portrait / mobile) ---------- */
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding-top: 16px;
   }
 
   .hero__title {
-    font-size: 2rem;
+    font-size: clamp(1.6rem, 8vw, 3rem);
+    letter-spacing: 0.04em;
+  }
+
+  .hero__sub {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+  }
+
+  .hero__right {
+    height: 35vh;
+  }
+
+  .hero__right .img-wrap {
+    max-width: 220px;
+  }
+
+  .skills__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .skill {
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    border-radius: 10px;
+  }
+
+  .skill span {
+    font-size: clamp(0.9rem, 3vw, 1.5rem);
+  }
+
+  .gh-graph-wrap {
+    padding: 12px 10px 0.8rem 0.6rem;
+  }
+
+  .gh-month-label {
+    font-size: 0.65rem;
+  }
+
+  .gh-day-label {
+    width: 22px;
+    min-width: 22px;
+    font-size: 0.65rem;
+  }
+
+  .gh-cell {
+    margin: 1px;
+  }
+
+  .gh-legend {
+    font-size: 0.75rem;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .gh-swatch {
+    width: 14px;
+    height: 14px;
+  }
+
+  .sec-title {
+    font-size: 1.2rem;
+  }
+
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tldr__heading {
+    font-size: 1.5rem;
+  }
+
+  .tldr__info {
+    font-size: 0.82rem;
+    padding: 0 0.5rem;
+  }
+
+  .tldr-directives li {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .footer__contact .contact-header {
+    font-size: 1.4rem;
+  }
+
+  .footer__email,
+  .footer__github {
+    font-size: 0.95rem;
+  }
+
+  .footer__statue-wrap .img-wrap {
+    max-width: 240px;
+  }
+
+  .scroll-fade {
+    height: 160px;
+  }
+
+  .hacker-deco {
+    display: none;
+  }
+}
+
+/* ---------- ≤ 480px  (small mobile) ---------- */
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: clamp(1.4rem, 9vw, 2.4rem);
+    letter-spacing: 0.03em;
+  }
+
+  .hero__sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+  }
+
+  .hero__right {
+    height: 30vh;
+  }
+
+  .hero__right .img-wrap {
+    max-width: 180px;
   }
 
   .skills__grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .sec-title {
+    font-size: 1rem;
+  }
+
+  .projects {
+    margin-top: 2rem;
+  }
+
+  .info__role {
+    font-size: 0.78rem;
+  }
+
+  .info__list li {
+    font-size: 0.78rem;
+  }
+
+  .lang__row {
+    font-size: 0.78rem;
+  }
+
+  .card__name {
+    font-size: 0.85rem;
+  }
+
+  .card__desc {
+    font-size: 0.7rem;
+  }
+
+  .card {
+    min-height: 90px;
+    padding: 10px;
+  }
+
+  .tldr__bust {
+    width: 140px;
+  }
+
+  .tldr__heading {
+    font-size: 1.3rem;
+  }
+
+  .tldr__info {
+    font-size: 0.75rem;
+  }
+
+  .footer__contact .contact-header {
+    font-size: 1.2rem;
+  }
+
+  .footer__email,
+  .footer__github {
+    font-size: 0.85rem;
+  }
+
+  .footer__statue-wrap .img-wrap {
+    max-width: 180px;
+  }
+
+  .scroll-fade {
+    height: 120px;
+  }
+
+  .divider {
+    margin: 18px 0;
+  }
+}
+
+/* ---------- ≤ 360px  (extra-small / Nokia / SE) ---------- */
+@media (max-width: 360px) {
+  .hero__title {
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero__sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__right {
+    height: 25vh;
+  }
+
+  .hero__right .img-wrap {
+    max-width: 150px;
+  }
+
+  .skills__grid {
+    gap: 5px;
+  }
+
+  .skill {
+    border-radius: 8px;
+    font-size: clamp(1rem, 5vw, 1.6rem);
+  }
+
+  .skill span {
+    font-size: clamp(0.7rem, 3vw, 1.1rem);
+  }
+
+  .sec-title {
+    font-size: 0.9rem;
+  }
+
+  .tldr__heading {
+    font-size: 1.1rem;
+  }
+
+  .tldr__info {
+    font-size: 0.7rem;
+  }
+
+  .tldr__bust {
+    width: 120px;
+  }
+
+  .footer__statue-wrap .img-wrap {
+    max-width: 150px;
   }
 }
